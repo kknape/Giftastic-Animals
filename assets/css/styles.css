@@ -10,3 +10,12 @@
 #addAnimal {
     margin: 25px 5px 0px 25px;
 }
+
+.animalPics {
+    margin: 10px 10px 10px 10px;
+    }
+
+.addButton {
+    text-align: right;
+    margin: 0px 120px 20px 0px;
+}
