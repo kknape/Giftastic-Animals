@@ -14,30 +14,24 @@ var animals = ["Dogs", "Cats", "Penguins", "Ostrich", "Bear", "Hamster", "Birds"
 
 function displayAnimals(){
     var animal = $(this).attr("data-name");
-    var queryURL = "http://api.giphy.com/v1/gifs/search?q="+animal+"&api_key=WvmR5JCtXlAswDhoqIJdtS4NfUv0963C&limit=10"
+    var queryURL = "http://api.giphy.com/v1/gifs/search?q="+animal+"&api_key=WvmR5JCtXlAswDhoqIJdtS4NfUv0963C&limit=10";
 
 
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-      }).then(function(response) {
+    $.ajax({ url: queryURL, method: "GET"})
+      .then(function(AnimalGifData) {
 
-        var animalPic = $("<img>");
+          for (var i=0; i<AnimalGifData.data.length; i++){
+          console.log(AnimalGifData.data[i].images.fixed_height.url);
+          console.log(AnimalGifData.data[i].images.looping.mp4); 
 
-        animalPic.addClass("src" );
-   //     document.html(animalPic);
- //       var sourceImg = response.images.fixed_height_still;
-      });
-}
+                  }
+          //logging to console for reference
+          //console.log(queryURL);
+         // console.log(AnimalGifData);
+          });
+      }  
 
-//$(".animals").click(function() {
-  //  displayAnimals();
- //   alert("The paragraph was clicked.");
- // });
 
-  
-      // Adding a click event listener to all elements with a class of "movie-btn"
-      $(document).on("click", ".animal", displayAnimals);
 
     // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
     //var state = $(this).attr("data-state");
@@ -58,19 +52,19 @@ function displayAnimals(){
 
 // page displays with buttons labeled with animals
 function renderButtons(){
-$("#buttons").empty();
+      $("#buttons").empty();
 
-for (var i=0; i<animals.length; i++) {
-    var a = $("<button>");
-    // Adding a class
-    a.addClass("animal btn btn-primary");
-    // Adding a data-attribute with a value of the movie at index i
-    a.attr("data-name", animals[i]);
-    // Providing the button's text with a value of the movie at index i
-    a.text(animals[i]);
-    // Adding the button to the HTML
-    $("#buttons").append(a);
-    }
+      for (var i=0; i<animals.length; i++) {
+          var a = $("<button>");
+          // Adding a class
+          a.addClass("animal btn btn-primary");
+          // Adding a data-attribute with a value of the movie at index i
+          a.attr("data-name", animals[i]);
+          // Providing the button's text with a value of the movie at index i
+          a.text(animals[i]);
+          // Adding the button to the HTML
+          $("#buttons").append(a);
+          }
 }
 //on click event to create a new animal button
 $("#addAnimal").click(function(event){
@@ -80,6 +74,10 @@ $("#addAnimal").click(function(event){
     animals.push(animalBtn);
 
      renderButtons();
-  });
+  })
 
-  renderButtons();
+
+// On Clikc of any Animal button...Adding a click event listener to all elements with a class of "animal"
+$(document).on("click", ".animal", displayAnimals);
+
+renderButtons();
