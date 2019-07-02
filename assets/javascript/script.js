@@ -5,35 +5,35 @@ var animals = ["Dogs", "Cats", "Penguins", "Ostrich", "Bear", "Hamster", "Birds"
 
 //Function to call animal pics from api
     function displayAnimals(){
-        $("#animalPics").empty();
+        $("#imgSection").empty();
         var animal = $(this).attr("data-name");
         var queryURL = "http://api.giphy.com/v1/gifs/search?q="+animal+"&api_key=WvmR5JCtXlAswDhoqIJdtS4NfUv0963C&limit=10";
-        var image = "";
+        var images = "";
 
         $.ajax({ url: queryURL, method: "GET"})
           .then(function(AnimalGifData) {
 
+            console.log(AnimalGifData);
               for (var i=0; i<AnimalGifData.data.length; i++){
 
               //add images from api call to the page
               images = $("<img>");
-              images.attr({"src": AnimalGifData.data[i].images.fixed_height_still.url, "data-still": AnimalGifData.data[i].images.fixed_height_still.url, "data-animate": AnimalGifData.data[i].images.looping.mp4, "data-state": "still"});
-              images.addClass("animalPics");
-              $("#animalPics").append(images);
+              images.attr({"src": AnimalGifData.data[i].images.fixed_height_still.url, "data-still": AnimalGifData.data[i].images.fixed_height_still.url, "data-animate": AnimalGifData.data[i].images.fixed_height.url, "data-state": "still", "class": "gif"});
+              $("#imgSection").append(images);
                       }
-              });
+              
          
 //Clicking on gif activates the looping gif and vice-versa
-    $("#animalPics").on("click", function() {
-      //alert("This is an aleart");
-        var state = $(images).attr("data-state");
+    $(".gif").on("click", function() {
+        var state = $(this).attr("data-state");
           if (state === "still") {
-                $(images).attr("src", $(images).attr("data-animate"));
-                $(images).attr("data-state", "animate");
+                $(this).attr("src", $(this).attr("data-animate"));
+                $(this).attr("data-state", "animate");
           } else {
-                $(images).attr("src", $(images).attr("data-still"));
-                $(images).attr("data-state", "still");
+                $(this).attr("src", $(this).attr("data-still"));
+                $(this).attr("data-state", "still");
           }
+});
 });
 }
 //create an array of the animals
