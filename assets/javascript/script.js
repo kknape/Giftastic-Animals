@@ -33,8 +33,8 @@ var animals = ["Dogs", "Cats", "Penguins", "Ostrich", "Bear", "Hamster", "Birds"
                 $(this).attr("src", $(this).attr("data-still"));
                 $(this).attr("data-state", "still");
           }
-});
-});
+      });
+    });
 }
 //create an array of the animals
 
@@ -61,7 +61,7 @@ var animals = ["Dogs", "Cats", "Penguins", "Ostrich", "Bear", "Hamster", "Birds"
 
           var animalBtn = $("#button-input").val().trim();
           animals.push(animalBtn);
-
+          $("#button-form").get(0).reset();
           renderButtons();
         })
 
