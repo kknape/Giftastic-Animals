@@ -1,4 +1,5 @@
 //My javascript file
+$(document).ready(function(){
 
 //create an array of the animals. These will be buttons displayed when the page loads
 var animals = ["Dogs", "Cats", "Penguins", "Ostrich", "Bear", "Hamster", "Birds", "Armadillo", "Cow", "Seal"];
@@ -9,20 +10,48 @@ var animals = ["Dogs", "Cats", "Penguins", "Ostrich", "Bear", "Hamster", "Birds"
         var animal = $(this).attr("data-name");
         var queryURL = "http://api.giphy.com/v1/gifs/search?q="+animal+"&api_key=WvmR5JCtXlAswDhoqIJdtS4NfUv0963C&limit=10";
         var images = "";
+        var ratings = "";
+        var pRate = "";
 
         $.ajax({ url: queryURL, method: "GET"})
           .then(function(AnimalGifData) {
-
+            //added console log for reference and troubleshooting
             console.log(AnimalGifData);
+
               for (var i=0; i<AnimalGifData.data.length; i++){
 
-              //add images from api call to the page
-              images = $("<img>");
-              images.attr({"src": AnimalGifData.data[i].images.fixed_height_still.url, "data-still": AnimalGifData.data[i].images.fixed_height_still.url, "data-animate": AnimalGifData.data[i].images.fixed_height.url, "data-state": "still", "class": "gif"});
-              $("#imgSection").append(images);
-                      }
+                //create divs to hold rating and image
+                  var imgDiv = $("<div class='imgDivs'>");
+                
+                  //add divs to the image section of the html
+                  $("#imgSection").append(imgDiv);
+
+                  //create variable for the rating from api
+                  ratings = AnimalGifData.data[i].rating;
+                  
+                  //create variable to display Rating 
+                  var pRate = $("<p class='rating'>").text("Rating: " + ratings);
+
+                  //Display the rating
+                  imgDiv.append(pRate);
+
+                  //create an image div
+                  images = $("<img>");
+
+                  //give image attributes to show image still and animated
+                  images.attr({
+                  "src": AnimalGifData.data[i].images.fixed_height_still.url,
+                  "data-still": AnimalGifData.data[i].images.fixed_height_still.url, 
+                  "data-animate": AnimalGifData.data[i].images.fixed_height.url, 
+                  "data-state": "still", 
+                  "class": "gif img-fluid",
+                      });
+                
+                  //add images to the page    
+                  imgDiv.append(images);
               
-         
+            }          
+       
 //Clicking on gif activates the looping gif and vice-versa
     $(".gif").on("click", function() {
         var state = $(this).attr("data-state");
@@ -36,9 +65,8 @@ var animals = ["Dogs", "Cats", "Penguins", "Ostrich", "Bear", "Hamster", "Birds"
       });
     });
 }
-//create an array of the animals
 
-// page displays with buttons labeled with animals
+// creates animal buttons
     function renderButtons(){
           $("#buttons").empty();
 
@@ -65,8 +93,10 @@ var animals = ["Dogs", "Cats", "Penguins", "Ostrich", "Bear", "Hamster", "Birds"
           renderButtons();
         })
 
-// On Clikc of any Animal button...Adding a click event listener to all elements with a class of "animal"
+// On Click of any Animal buttons to see the corresponding animal gifs...Adding a click event listener to all elements with a class of "animal"
     $(document).on("click", ".animal", displayAnimals);
 
+//run the function to create the animal buttons
 renderButtons();
 
+});
