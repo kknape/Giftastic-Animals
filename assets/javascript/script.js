@@ -8,7 +8,7 @@ var animals = ["Dogs", "Cats", "Penguins", "Ostrich", "Bear", "Hamster", "Birds"
     function displayAnimals(){
         $("#imgSection").empty();
         var animal = $(this).attr("data-name");
-        var queryURL = "http://api.giphy.com/v1/gifs/search?q="+animal+"&api_key=WvmR5JCtXlAswDhoqIJdtS4NfUv0963C&limit=10";
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q="+animal+"&api_key=WvmR5JCtXlAswDhoqIJdtS4NfUv0963C&limit=10";
         var images = "";
         var ratings = "";
         var pRate = "";
